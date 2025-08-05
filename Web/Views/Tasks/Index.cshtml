@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TaskViewModel>
+
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header p-4 bg-success text-white text-center">
+            <h1>List of Task Need to Finish</h1>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-6">
+                    <a class="btn btn-outline-success p-2" asp-controller="Tasks" asp-action="Upsert">Create Task</a>
+                </div>
+                <div class="col-6"></div>
+            </div>
+            @if (Model?.Count() > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Priority</th>
+                            <th>Creator</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+                            <tr>
+                                <th>@obj.Id</th>
+                                <th>@obj.Title</th>
+                                <th>@obj.Priority</th>
+                                <th>@obj.Creator</th>
+                                <th>@obj.StatusMap[obj.Status!]</th>
+                                <th>
+                                    <a class="btn btn-outline-success" asp-controller="Tasks" asp-action="Upsert" asp-route-taskId="@obj.Id">Update</a>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h3 class="text-center">
+                    Woo hoo! No Task Available right now.
+                </h3>
+            }
+        </div>
+    </div>
+</div>

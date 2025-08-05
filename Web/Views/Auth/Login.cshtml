@@ -1,0 +1,24 @@
+﻿@model LoginViewModel
+
+
+<div class="container mx-auto">
+    <h2>Login</h2>
+    <form asp-controller="Auth" asp-action="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="my-1">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="d-block text-danger"></span>
+        </div>
+        <div class="my-1">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="d-block text-danger"></span>
+        </div>
+        <div class="mt-2">
+            <label asp-for="RememberMe"></label>
+            <input asp-for="RememberMe"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>

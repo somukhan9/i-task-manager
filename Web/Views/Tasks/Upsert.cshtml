@@ -1,0 +1,45 @@
+﻿@model TaskViewModel
+
+@{
+    ViewData["Title"] = "Create TaskDomain";
+
+    var title = Model.Id == 0 ? "Create TaskDomain" : "Update TaskDomain";
+    var buttonText = Model.Id == 0 ? "Create" : "Update";
+}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-success p-4 text-white">
+            <h1 class="text-center">@title</h1>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Tasks" asp-action="Upsert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id">
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input class="form-control" asp-for="Title">
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <input class="form-control" asp-for="Description">
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+
+                @if (Model.Id > 0)
+                {
+                    <div class="mb-3">
+                        <label asp-for="IsFinished" class="form-label"></label>
+                        <select asp-items="@Model.StatusList" asp-for="@Model.Status" class="form-select">
+                            <option selected disabled>Select Status</option>
+                        </select>
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-success">@buttonText</button>
+            </form>
+        </div>
+    </div>
+</div>

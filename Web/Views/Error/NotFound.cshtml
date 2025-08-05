@@ -1,0 +1,10 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "404 Not Found";
+    Layout = "_Layout";
+}
+
+<h1 class="text-danger">404 - Not Found</h1>
+<p>@Model</p>
+<a asp-asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>

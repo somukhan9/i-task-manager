@@ -1,0 +1,103 @@
+﻿@model BackgroundServicesViewModel
+
+@{
+    ViewData["Title"] = "Bakcground Services";
+}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-success text-center p-4">
+            <h1 class="text-center text-white">Background Services</h1>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header p-3">
+                    <h3 class="text-sm-center">Available Services</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.ListOfBackgroundServicesName.Count > 0)
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Number of Apps</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var obj in Model.ListOfBackgroundServicesName)
+                                {
+                                    <tr>
+                                        <td>@obj.Id</td>
+                                        <td>@obj.ServiceName</td>
+                                        <td>@obj.NumberOfApps</td>
+                                        <td>
+                                            <form asp-controller="BackgroundServices" asp-action="CreateService" method="post">
+                                                <input name="name" value="@obj.ServiceName" hidden />
+                                                <button type="submit" class="btn btn-sm btn-outline-success">Create Service App</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <h4 class="text-sm-center">No Service is Available</h4>
+                    }
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-sm-center">Running Services</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.ListOfRunningServices.Count > 0)
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>TaskId</th>
+                                    <th>Name</th>
+                                    <th>IsRunning</th>
+                                    <th>IsInterval</th>
+                                    <th>Message</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var obj in Model.ListOfRunningServices)
+                                {
+                                    <tr>
+                                        <td>@obj.TaskId</td>
+                                        <td>@obj.Name</td>
+                                        <td>@obj.IsRunnig</td>
+                                        <td>@obj.IsInInterval</td>
+                                        <td>@obj.Message</td>
+                                        <td>
+                                            <form asp-controller="BackgroundServices" asp-action="Kill" method="post">
+                                                <input name="taskId" value="@obj.TaskId" hidden />
+                                                <input name="name" value="@obj.Name" hidden />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Kill</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <h4 class="text-sm-center">No Background Service is Running Now</h4>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
