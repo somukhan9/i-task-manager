@@ -30,7 +30,7 @@ public class TaskOwnerAuthorizeAttribute(string id = "taskId") : Attribute, IAsy
         var factory = (context.HttpContext.RequestServices.GetService(typeof(ISqlConnectionFactory)) as ISqlConnectionFactory)!;
         var connection = await factory.CreateConnectionAsync();
 
-        var sql = @"SELECT * FROM [TaskManager].dbo.Tasks WHERE [Id] = @Id";
+        var sql = @"SELECT * FROM dbo.Tasks WHERE [Id] = @Id";
 
         var task = await connection.QueryFirstOrDefaultAsync<TaskDomain>(new CommandDefinition(
                 sql, new { Id = taskId }, commandType: CommandType.Text, commandTimeout: 60, cancellationToken: cancellationToken
