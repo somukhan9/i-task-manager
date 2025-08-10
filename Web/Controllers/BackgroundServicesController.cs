@@ -9,9 +9,9 @@ namespace Web.Controllers;
 
 
 [Authorize(Roles = Sd.Admin)]
-public class DeleteFinishedTasksBackgroundServicesController(IBackgroundService backgroundService
+public class BackgroundServicesController(IBackgroundService backgroundService
     , IBackgroundServicesFactory<DeleteFinishedTasksBackgroundService> deleteFinishedTasksBackgroundService
-    , ILogger<DeleteFinishedTasksBackgroundServicesController> logger) : Controller
+    , ILogger<BackgroundServicesController> logger) : Controller
 {
     public async Task<IActionResult> Index(string? name)
     {
@@ -29,7 +29,10 @@ public class DeleteFinishedTasksBackgroundServicesController(IBackgroundService 
     {
         try
         {
-            await deleteFinishedTasksBackgroundService.CreateAsync();
+            if (name.ToLower().Trim().Equals("DeleteFinishedTasksBackgroundService".ToLower().Trim()))
+            {
+                await deleteFinishedTasksBackgroundService.CreateAsync();
+            }
         }
         catch (Exception ex)
         {
