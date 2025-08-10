@@ -9,12 +9,6 @@ namespace Infrastructure.BackgroundServices;
 public class DeleteFinishedTasksBackgroundService : AppBackgroundService
 {
     private int secondToInterval = 10;
-    private readonly List<TimeSpan> _runTimes = new List<TimeSpan>()
-    {
-        new TimeSpan(00, 00, 0),
-        //new TimeSpan(13, 0, 0)
-        //DateTime.Now.TimeOfDay.Add(TimeSpan.FromMinutes(3)).Duration()
-    };
 
     public override string Name => "DeleteFinishedTasksBackgroundService";
 
@@ -43,16 +37,8 @@ public class DeleteFinishedTasksBackgroundService : AppBackgroundService
                 if (IsRunning)
                 {
                     // Check if current time matches any run time (within 1 minute tolerance)
-                    var shouldRun = _runTimes.Any(t => Math.Abs((now - t).TotalSeconds) < 30);
-                    if (shouldRun)
-                    {
-                        var result = await taskService!.DeleteFinishedTask(stoppingToken).ConfigureAwait(false);
-                        SetBackgroundStatus(result);
-                    }
-                    else
-                    {
-                        SetBackgroundStatus(shouldRun);
-                    }
+                    var result = await taskService!.DeleteFinishedTask(stoppingToken).ConfigureAwait(false);
+                    SetBackgroundStatus(result);
                 }
 
             }
